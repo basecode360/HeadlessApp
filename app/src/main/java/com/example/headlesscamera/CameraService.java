@@ -26,6 +26,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -49,7 +50,6 @@ public class CameraService extends Service {
     private boolean isRecording = false;
     private boolean isLooping = false;
 
-    // Add wake lock to keep service alive
     private PowerManager.WakeLock wakeLock;
 
     @Override
@@ -57,7 +57,6 @@ public class CameraService extends Service {
         super.onCreate();
         Log.d(TAG, "onCreate called - Creating persistent service");
 
-        // Acquire wake lock to prevent service from being killed
         PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
         wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "HeadlessCamera::CameraWakeLock");
         wakeLock.acquire();
@@ -87,7 +86,6 @@ public class CameraService extends Service {
             enableLooping();
         }
 
-        // CRITICAL: Return START_STICKY to restart service if killed
         return START_STICKY;
     }
 
@@ -96,7 +94,7 @@ public class CameraService extends Service {
                 .setContentTitle("📹 Headless Camera Service")
                 .setContentText("🔴 Ready to record (runs in background)")
                 .setSmallIcon(android.R.drawable.ic_menu_camera)
-                .setOngoing(true) // Prevent user from dismissing
+                .setOngoing(true)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .build();
 
@@ -169,7 +167,7 @@ public class CameraService extends Service {
     private void openCamera(Runnable onSuccess) {
         CameraManager manager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
         try {
-            cameraId = manager.getCameraIdList()[0]; // Back camera
+            cameraId = manager.getCameraIdList()[0];
 
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                 Log.e(TAG, "❌ Camera permission not granted");
@@ -267,7 +265,6 @@ public class CameraService extends Service {
         mediaRecorder.setVideoSource(MediaRecorder.VideoSource.SURFACE);
         mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
 
-        // Create output file with timestamp
         File outputDir = getExternalFilesDir(Environment.DIRECTORY_MOVIES);
         if (outputDir != null && !outputDir.exists()) {
             outputDir.mkdirs();
@@ -286,6 +283,13 @@ public class CameraService extends Service {
         try {
             mediaRecorder.prepare();
             Log.d(TAG, "🎬 MediaRecorder prepared, output: " + outputFile.getAbsolutePath());
+
+            File statusFile = new File(getExternalFilesDir(null), "latest_output.txt");
+            FileWriter writer = new FileWriter(statusFile, false);
+            writer.write(outputFile.getAbsolutePath());
+            writer.close();
+            Log.d(TAG, "📄 Output path saved to: " + statusFile.getAbsolutePath());
+
         } catch (IOException e) {
             Log.e(TAG, "❌ MediaRecorder prepare failed: " + e.getMessage());
         }
@@ -327,7 +331,6 @@ public class CameraService extends Service {
         super.onDestroy();
         Log.d(TAG, "🔥 Service destroyed - cleaning up");
 
-        // Release wake lock
         if (wakeLock != null && wakeLock.isHeld()) {
             wakeLock.release();
         }
@@ -346,7 +349,6 @@ public class CameraService extends Service {
         Log.d(TAG, "📱 App removed from recent apps - service continues running");
         updateNotification("📱 App closed - service still running");
 
-        // Restart service if app is swiped away
         Intent restartService = new Intent(getApplicationContext(), this.getClass());
         restartService.setPackage(getPackageName());
         startService(restartService);
@@ -363,7 +365,7 @@ public class CameraService extends Service {
             NotificationChannel serviceChannel = new NotificationChannel(
                     CHANNEL_ID,
                     "Headless Camera Service",
-                    NotificationManager.IMPORTANCE_HIGH // High importance to prevent killing
+                    NotificationManager.IMPORTANCE_HIGH
             );
             serviceChannel.setDescription("Background camera recording service");
             serviceChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
