@@ -3,19 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Camera and Audio Permissions -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <!-- Storage Permissions -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="28" />
+        android:maxSdkVersion="34" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="32" />
+        android:maxSdkVersion="34" />
 
     <!-- Foreground Service Permissions -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CAMERA"
-        tools:targetApi="upsidedowncake" />
+        tools:targetApi="34" />
 
     <!-- Boot Receiver Permission -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -24,6 +28,11 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
+    <!-- CRITICAL: Add this for Android 14+ background restrictions -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.START_FOREGROUND_SERVICES_FROM_BACKGROUND"
+        tools:targetApi="34" />
+
     <application
         android:allowBackup="true"
         android:label="HeadlessCamera"
@@ -31,31 +40,37 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:requestLegacyExternalStorage="true">
 
-        <!-- Main Activity -->
+        <!-- Main Activity - CRITICAL: Make it exported and with launcher category -->
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <!-- Camera Service -->
+        <!-- Camera Service - CRITICAL: Add directBootAware -->
         <service
             android:name=".CameraService"
             android:enabled="true"
             android:exported="true"
-            android:foregroundServiceType="camera" />
+            android:foregroundServiceType="camera"
+            android:directBootAware="true" />
 
         <!-- Boot Receiver -->
         <receiver
             android:name=".BootReceiver"
             android:enabled="true"
-            android:exported="true">
+            android:exported="true"
+            android:directBootAware="true">
             <intent-filter android:priority="1000">
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+                <data android:scheme="package" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
