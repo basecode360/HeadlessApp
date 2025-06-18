@@ -1,0 +1,6 @@
+com.example.headlesscamera.test.app-core-1.5.0-0 /Users/rabia/.gradle/caches/8.11.1/transforms/53153b031ef2aa333509ea53a9b4b0d4/transformed/core-1.5.0/res
+com.example.headlesscamera.test.app-annotation-experimental-1.3.0-1 /Users/rabia/.gradle/caches/8.11.1/transforms/f82e5d3a109db72da6ba85877bef2d66/transformed/annotation-experimental-1.3.0/res
+com.example.headlesscamera.test.app-androidTest-2 /Users/rabia/Documents/GitHub/HeadlessApp/app/build/generated/res/resValues/androidTest/debug
+com.example.headlesscamera.test.app-mergeDebugAndroidTestResources-3 /Users/rabia/Documents/GitHub/HeadlessApp/app/build/intermediates/incremental/debugAndroidTest/mergeDebugAndroidTestResources/merged.dir
+com.example.headlesscamera.test.app-mergeDebugAndroidTestResources-4 /Users/rabia/Documents/GitHub/HeadlessApp/app/build/intermediates/incremental/debugAndroidTest/mergeDebugAndroidTestResources/stripped.dir
+com.example.headlesscamera.test.app-debugAndroidTest-5 /Users/rabia/Documents/GitHub/HeadlessApp/app/build/intermediates/merged_res/debugAndroidTest/mergeDebugAndroidTestResources

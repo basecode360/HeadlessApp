@@ -1,0 +1,262 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.headlesscamera"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="30"
+9        android:targetSdkVersion="35" />
+10
+11    <!-- Camera and Audio Permissions -->
+12    <uses-feature
+12-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:6:5-8:36
+13        android:name="android.hardware.camera"
+13-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:7:9-47
+14        android:required="false" />
+14-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:8:9-33
+15
+16    <uses-permission android:name="android.permission.CAMERA" />
+16-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:10:5-65
+16-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:10:22-62
+17    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+17-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:11:5-71
+17-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:11:22-68
+18
+19    <!-- Storage Permissions -->
+20    <uses-permission
+20-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:14:5-15:38
+21        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+21-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:14:22-78
+22        android:maxSdkVersion="34" />
+22-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:15:9-35
+23    <uses-permission
+23-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:16:5-17:38
+24        android:name="android.permission.READ_EXTERNAL_STORAGE"
+24-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:16:22-77
+25        android:maxSdkVersion="34" />
+25-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:17:9-35
+26
+27    <!-- Foreground Service Permissions -->
+28    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+28-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:20:5-77
+28-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:20:22-74
+29    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CAMERA" />
+29-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:21:5-22:32
+29-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:21:22-81
+30
+31    <!-- Boot Receiver Permission -->
+32    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+32-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:25:5-81
+32-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:25:22-78
+33
+34    <!-- Wake Lock Permission -->
+35    <uses-permission android:name="android.permission.WAKE_LOCK" />
+35-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:28:5-68
+35-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:28:22-65
+36    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+36-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:29:5-95
+36-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:29:22-92
+37
+38    <!-- CRITICAL: Add this for Android 14+ background restrictions -->
+39    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+39-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:32:5-78
+39-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:32:22-75
+40    <uses-permission android:name="android.permission.START_FOREGROUND_SERVICES_FROM_BACKGROUND" />
+40-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:33:5-34:32
+40-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:33:22-97
+41
+42    <permission
+42-->[androidx.core:core:1.9.0] /Users/rabia/.gradle/caches/8.11.1/transforms/9911ab9ce4104d7b19c67d33f144aeac/transformed/core-1.9.0/AndroidManifest.xml:22:5-24:47
+43        android:name="com.example.headlesscamera.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+43-->[androidx.core:core:1.9.0] /Users/rabia/.gradle/caches/8.11.1/transforms/9911ab9ce4104d7b19c67d33f144aeac/transformed/core-1.9.0/AndroidManifest.xml:23:9-81
+44        android:protectionLevel="signature" />
+44-->[androidx.core:core:1.9.0] /Users/rabia/.gradle/caches/8.11.1/transforms/9911ab9ce4104d7b19c67d33f144aeac/transformed/core-1.9.0/AndroidManifest.xml:24:9-44
+45
+46    <uses-permission android:name="com.example.headlesscamera.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+46-->[androidx.core:core:1.9.0] /Users/rabia/.gradle/caches/8.11.1/transforms/9911ab9ce4104d7b19c67d33f144aeac/transformed/core-1.9.0/AndroidManifest.xml:26:5-97
+46-->[androidx.core:core:1.9.0] /Users/rabia/.gradle/caches/8.11.1/transforms/9911ab9ce4104d7b19c67d33f144aeac/transformed/core-1.9.0/AndroidManifest.xml:26:22-94
+47
+48    <application
+48-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:36:5-91:19
+49        android:allowBackup="true"
+49-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:37:9-35
+50        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+50-->[androidx.core:core:1.9.0] /Users/rabia/.gradle/caches/8.11.1/transforms/9911ab9ce4104d7b19c67d33f144aeac/transformed/core-1.9.0/AndroidManifest.xml:28:18-86
+51        android:debuggable="true"
+52        android:extractNativeLibs="false"
+53        android:label="HeadlessCamera"
+53-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:38:9-39
+54        android:requestLegacyExternalStorage="true"
+54-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:41:9-52
+55        android:supportsRtl="true"
+55-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:39:9-35
+56        android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
+56-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:40:9-65
+57
+58        <!-- Main Activity - CRITICAL: Make it exported and with launcher category -->
+59        <activity
+59-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:44:9-52:20
+60            android:name="com.example.headlesscamera.MainActivity"
+60-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:45:13-41
+61            android:exported="true"
+61-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:46:13-36
+62            android:launchMode="singleTop" >
+62-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:47:13-43
+63            <intent-filter>
+63-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:48:13-51:29
+64                <action android:name="android.intent.action.MAIN" />
+64-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:49:17-69
+64-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:49:25-66
+65
+66                <category android:name="android.intent.category.LAUNCHER" />
+66-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:50:17-77
+66-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:50:27-74
+67            </intent-filter>
+68        </activity>
+69
+70        <!-- Camera Service - CRITICAL: Add directBootAware -->
+71        <service
+71-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:55:9-60:46
+72            android:name="com.example.headlesscamera.CameraService"
+72-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:56:13-42
+73            android:directBootAware="true"
+73-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:60:13-43
+74            android:enabled="true"
+74-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:57:13-35
+75            android:exported="true"
+75-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:58:13-36
+76            android:foregroundServiceType="camera" />
+76-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:59:13-51
+77
+78        <!-- Boot Receiver -->
+79        <receiver
+79-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:63:9-76:20
+80            android:name="com.example.headlesscamera.BootReceiver"
+80-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:64:13-41
+81            android:directBootAware="true"
+81-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:67:13-43
+82            android:enabled="true"
+82-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:65:13-35
+83            android:exported="true" >
+83-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:66:13-36
+84            <intent-filter android:priority="1000" >
+84-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:68:13-75:29
+84-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:68:28-51
+85                <action android:name="android.intent.action.BOOT_COMPLETED" />
+85-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:69:17-79
+85-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:69:25-76
+86                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+86-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:70:17-82
+86-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:70:25-79
+87                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+87-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:71:17-84
+87-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:71:25-81
+88                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+88-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:72:17-81
+88-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:72:25-78
+89
+90                <data android:scheme="package" />
+90-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:73:17-50
+90-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:73:23-47
+91
+92                <category android:name="android.intent.category.DEFAULT" />
+92-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:74:17-76
+92-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:74:27-73
+93            </intent-filter>
+94        </receiver>
+95
+96        <!-- Broadcast Handler -->
+97        <receiver
+97-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:79:9-89:20
+98            android:name="com.example.headlesscamera.BroadcastHandler"
+98-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:80:13-45
+99            android:enabled="true"
+99-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:81:13-35
+100            android:exported="true" >
+100-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:82:13-36
+101            <intent-filter>
+101-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:83:13-88:29
+102                <action android:name="com.example.headlesscamera.START_RECORDING" />
+102-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:84:17-85
+102-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:84:25-82
+103                <action android:name="com.example.headlesscamera.STOP_RECORDING" />
+103-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:85:17-84
+103-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:85:25-81
+104                <action android:name="com.example.headlesscamera.OPEN_CAMERA" />
+104-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:86:17-81
+104-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:86:25-78
+105                <action android:name="com.example.headlesscamera.ENABLE_LOOPING" />
+105-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:87:17-84
+105-->/Users/rabia/Documents/GitHub/HeadlessApp/app/src/main/AndroidManifest.xml:87:25-81
+106            </intent-filter>
+107        </receiver>
+108
+109        <provider
+109-->[androidx.emoji2:emoji2:1.2.0] /Users/rabia/.gradle/caches/8.11.1/transforms/722fa6c7867d9d058a5fa3d0018e1a01/transformed/emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
+110            android:name="androidx.startup.InitializationProvider"
+110-->[androidx.emoji2:emoji2:1.2.0] /Users/rabia/.gradle/caches/8.11.1/transforms/722fa6c7867d9d058a5fa3d0018e1a01/transformed/emoji2-1.2.0/AndroidManifest.xml:25:13-67
+111            android:authorities="com.example.headlesscamera.androidx-startup"
+111-->[androidx.emoji2:emoji2:1.2.0] /Users/rabia/.gradle/caches/8.11.1/transforms/722fa6c7867d9d058a5fa3d0018e1a01/transformed/emoji2-1.2.0/AndroidManifest.xml:26:13-68
+112            android:exported="false" >
+112-->[androidx.emoji2:emoji2:1.2.0] /Users/rabia/.gradle/caches/8.11.1/transforms/722fa6c7867d9d058a5fa3d0018e1a01/transformed/emoji2-1.2.0/AndroidManifest.xml:27:13-37
+113            <meta-data
+113-->[androidx.emoji2:emoji2:1.2.0] /Users/rabia/.gradle/caches/8.11.1/transforms/722fa6c7867d9d058a5fa3d0018e1a01/transformed/emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
+114                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+114-->[androidx.emoji2:emoji2:1.2.0] /Users/rabia/.gradle/caches/8.11.1/transforms/722fa6c7867d9d058a5fa3d0018e1a01/transformed/emoji2-1.2.0/AndroidManifest.xml:30:17-75
+115                android:value="androidx.startup" />
+115-->[androidx.emoji2:emoji2:1.2.0] /Users/rabia/.gradle/caches/8.11.1/transforms/722fa6c7867d9d058a5fa3d0018e1a01/transformed/emoji2-1.2.0/AndroidManifest.xml:31:17-49
+116            <meta-data
+116-->[androidx.lifecycle:lifecycle-process:2.6.1] /Users/rabia/.gradle/caches/8.11.1/transforms/6618edfe39427bf84ab75207408cef85/transformed/lifecycle-process-2.6.1/AndroidManifest.xml:29:13-31:52
+117                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+117-->[androidx.lifecycle:lifecycle-process:2.6.1] /Users/rabia/.gradle/caches/8.11.1/transforms/6618edfe39427bf84ab75207408cef85/transformed/lifecycle-process-2.6.1/AndroidManifest.xml:30:17-78
+118                android:value="androidx.startup" />
+118-->[androidx.lifecycle:lifecycle-process:2.6.1] /Users/rabia/.gradle/caches/8.11.1/transforms/6618edfe39427bf84ab75207408cef85/transformed/lifecycle-process-2.6.1/AndroidManifest.xml:31:17-49
+119            <meta-data
+119-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/rabia/.gradle/caches/8.11.1/transforms/215f3d3052971ae3a98652a8175ea67f/transformed/profileinstaller-1.3.0/AndroidManifest.xml:29:13-31:52
+120                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+120-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/rabia/.gradle/caches/8.11.1/transforms/215f3d3052971ae3a98652a8175ea67f/transformed/profileinstaller-1.3.0/AndroidManifest.xml:30:17-85
+121                android:value="androidx.startup" />
+121-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/rabia/.gradle/caches/8.11.1/transforms/215f3d3052971ae3a98652a8175ea67f/transformed/profileinstaller-1.3.0/AndroidManifest.xml:31:17-49
+122        </provider>
+123
+124        <receiver
+124-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/rabia/.gradle/caches/8.11.1/transforms/215f3d3052971ae3a98652a8175ea67f/transformed/profileinstaller-1.3.0/AndroidManifest.xml:34:9-52:20
+125            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+125-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/rabia/.gradle/caches/8.11.1/transforms/215f3d3052971ae3a98652a8175ea67f/transformed/profileinstaller-1.3.0/AndroidManifest.xml:35:13-76
+126            android:directBootAware="false"
+126-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/rabia/.gradle/caches/8.11.1/transforms/215f3d3052971ae3a98652a8175ea67f/transformed/profileinstaller-1.3.0/AndroidManifest.xml:36:13-44
+127            android:enabled="true"
+127-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/rabia/.gradle/caches/8.11.1/transforms/215f3d3052971ae3a98652a8175ea67f/transformed/profileinstaller-1.3.0/AndroidManifest.xml:37:13-35
+128            android:exported="true"
+128-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/rabia/.gradle/caches/8.11.1/transforms/215f3d3052971ae3a98652a8175ea67f/transformed/profileinstaller-1.3.0/AndroidManifest.xml:38:13-36
+129            android:permission="android.permission.DUMP" >
+129-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/rabia/.gradle/caches/8.11.1/transforms/215f3d3052971ae3a98652a8175ea67f/transformed/profileinstaller-1.3.0/AndroidManifest.xml:39:13-57
+130            <intent-filter>
+130-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/rabia/.gradle/caches/8.11.1/transforms/215f3d3052971ae3a98652a8175ea67f/transformed/profileinstaller-1.3.0/AndroidManifest.xml:40:13-42:29
+131                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+131-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/rabia/.gradle/caches/8.11.1/transforms/215f3d3052971ae3a98652a8175ea67f/transformed/profileinstaller-1.3.0/AndroidManifest.xml:41:17-91
+131-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/rabia/.gradle/caches/8.11.1/transforms/215f3d3052971ae3a98652a8175ea67f/transformed/profileinstaller-1.3.0/AndroidManifest.xml:41:25-88
+132            </intent-filter>
+133            <intent-filter>
+133-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/rabia/.gradle/caches/8.11.1/transforms/215f3d3052971ae3a98652a8175ea67f/transformed/profileinstaller-1.3.0/AndroidManifest.xml:43:13-45:29
+134                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+134-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/rabia/.gradle/caches/8.11.1/transforms/215f3d3052971ae3a98652a8175ea67f/transformed/profileinstaller-1.3.0/AndroidManifest.xml:44:17-85
+134-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/rabia/.gradle/caches/8.11.1/transforms/215f3d3052971ae3a98652a8175ea67f/transformed/profileinstaller-1.3.0/AndroidManifest.xml:44:25-82
+135            </intent-filter>
+136            <intent-filter>
+136-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/rabia/.gradle/caches/8.11.1/transforms/215f3d3052971ae3a98652a8175ea67f/transformed/profileinstaller-1.3.0/AndroidManifest.xml:46:13-48:29
+137                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+137-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/rabia/.gradle/caches/8.11.1/transforms/215f3d3052971ae3a98652a8175ea67f/transformed/profileinstaller-1.3.0/AndroidManifest.xml:47:17-88
+137-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/rabia/.gradle/caches/8.11.1/transforms/215f3d3052971ae3a98652a8175ea67f/transformed/profileinstaller-1.3.0/AndroidManifest.xml:47:25-85
+138            </intent-filter>
+139            <intent-filter>
+139-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/rabia/.gradle/caches/8.11.1/transforms/215f3d3052971ae3a98652a8175ea67f/transformed/profileinstaller-1.3.0/AndroidManifest.xml:49:13-51:29
+140                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+140-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/rabia/.gradle/caches/8.11.1/transforms/215f3d3052971ae3a98652a8175ea67f/transformed/profileinstaller-1.3.0/AndroidManifest.xml:50:17-95
+140-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/rabia/.gradle/caches/8.11.1/transforms/215f3d3052971ae3a98652a8175ea67f/transformed/profileinstaller-1.3.0/AndroidManifest.xml:50:25-92
+141            </intent-filter>
+142        </receiver>
+143    </application>
+144
+145</manifest>
