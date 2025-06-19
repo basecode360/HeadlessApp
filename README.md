@@ -1,62 +1,95 @@
 # HeadlessCamera - Android Background Camera Recording Service
 
-A powerful Android application that provides background camera recording capabilities without requiring a visible UI. Perfect for surveillance, monitoring, or automated recording scenarios where the app needs to continue recording even when minimized or the device is locked.
+````markdown
+# HeadlessCamera – Android Background Camera Recording Service
+
+A powerful Android application that provides truly headless background camera recording without any visible UI. Perfect for surveillance, monitoring, or automated recording scenarios where the app needs to continue recording even when minimized, the screen is off, or the device is locked.
+
+---
 
 ## 🎯 Features
 
-- **Truly Headless Operation**: Records video without requiring the app to stay open
-- **Background Service**: Continues recording even when app is minimized or removed from recent apps
-- **Foreground Service**: Ensures recording survives system memory cleanup
-- **Boot Persistence**: Automatically starts service on device boot
-- **Broadcast Control**: Control recording via ADB commands or intents
-- **Wake Lock**: Prevents device from sleeping during recording
-- **Multiple Control Methods**: Activity starts, broadcast intents, and service commands
+- **Truly Headless Operation** – Records video even if the app is not in the foreground  
+- **Background & Foreground Service** – Survives system memory cleanup and OS background limits  
+- **Boot Persistence** – Automatically restarts on device boot or app update  
+- **Broadcast Control** – Start/stop/loop recording via ADB or custom intents  
+- **Wake Lock** – Prevents device from sleeping during recording  
+- **Multiple Control Methods** – Activity start, broadcasts, or service commands  
+
+---
 
 ## 📋 Requirements
 
-- Android 10+ (API 30+)
-- Camera and microphone permissions
-- Storage access for saving recordings
-- ADB access for installation and control
+- **Android 10+ (API 29+)**, tested up through Android 14 (API 34)  
+- **Camera & microphone** hardware  
+- **Storage access** for saving recordings (app-specific directory)  
+- **ADB** or shell access for advanced control  
 
-## 🚀 Installation & Setup
+---
 
-### 1. Build the Project
+## 📱 Installation & Setup
 
+### 1. Build the APK  
 ```bash
 ./gradlew assembleDebug
-```
+````
 
-### 2. Install via ADB
+### 2. Install on Device
 
 ```bash
-# Install the APK
+# Standard install
 adb install -r app/build/outputs/apk/debug/app-debug.apk
 
-# Alternative: Push to device and install via shell
+# Alternative push & install
 adb push app/build/outputs/apk/debug/app-debug.apk /data/local/tmp/
 adb shell pm install -r /data/local/tmp/app-debug.apk
 ```
 
-### 3. Grant Required Permissions
+---
+
+## 🔐 Grant Required Permissions
+
+> **Note:** On Android 11+ (API 30+), scoped storage is enforced; you can still pull files via ADB, but file explorers may not show the app’s private directory without root.
 
 ```bash
-# Grant critical permissions (required for Android 14+)
+# Core runtime permissions
 adb shell pm grant com.example.headlesscamera android.permission.CAMERA
 adb shell pm grant com.example.headlesscamera android.permission.RECORD_AUDIO
 adb shell pm grant com.example.headlesscamera android.permission.FOREGROUND_SERVICE
 adb shell pm grant com.example.headlesscamera android.permission.FOREGROUND_SERVICE_CAMERA
 
-# Set app operations
-adb shell appops set com.example.headlesscamera CAMERA allow
-adb shell appops set com.example.headlesscamera RECORD_AUDIO allow
+# Boot & wake-lock
+adb shell pm grant com.example.headlesscamera android.permission.RECEIVE_BOOT_COMPLETED
+adb shell pm grant com.example.headlesscamera android.permission.WAKE_LOCK
+
+# Background & system overlay (may require manual user action)
+# SYSTEM_ALERT_WINDOW and REQUEST_IGNORE_BATTERY_OPTIMIZATIONS cannot always be granted via pm grant;
+# the user must enable them in Settings → Apps → Special access.
+adb shell pm grant com.example.headlesscamera android.permission.SYSTEM_ALERT_WINDOW
+adb shell pm grant com.example.headlesscamera android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
+
+# Android 14+ background start
+adb shell pm grant com.example.headlesscamera android.permission.START_FOREGROUND_SERVICES_FROM_BACKGROUND
 ```
+
+---
+
+## 🔄 Simulate Boot Receiver
+
+To test the boot-persistence without rebooting:
+
+```bash
+adb shell am broadcast -a android.intent.action.BOOT_COMPLETED
+```
+
+---
 
 ## 📱 Usage
 
 ### Method 1: Direct Activity Start (Recommended)
 
-**Start Recording:**
+**Start Recording**
+
 ```bash
 adb shell am start \
   -n com.example.headlesscamera/.MainActivity \
@@ -64,7 +97,8 @@ adb shell am start \
   --es auto_action com.example.headlesscamera.START_RECORDING
 ```
 
-**Stop Recording:**
+**Stop Recording**
+
 ```bash
 adb shell am start \
   -n com.example.headlesscamera/.MainActivity \
@@ -74,142 +108,176 @@ adb shell am start \
 
 ### Method 2: Broadcast Intents
 
-**Start Recording:**
+**Start**
+
 ```bash
 adb shell am broadcast \
   -n com.example.headlesscamera/.BroadcastHandler \
   -a com.example.headlesscamera.START_RECORDING
 ```
 
-**Stop Recording:**
+**Stop**
+
 ```bash
 adb shell am broadcast \
   -n com.example.headlesscamera/.BroadcastHandler \
   -a com.example.headlesscamera.STOP_RECORDING
 ```
 
-**Enable Looping Mode:**
+**Enable Looping**
+
 ```bash
 adb shell am broadcast \
   -n com.example.headlesscamera/.BroadcastHandler \
   -a com.example.headlesscamera.ENABLE_LOOPING
 ```
 
-### Method 3: Shell Commands (On Device)
-
-If you have shell access directly on the device:
+### Method 3: Shell Commands on Device
 
 ```bash
-# Start recording
+# Start
 am start \
   -n com.example.headlesscamera/.MainActivity \
   --es auto_command start \
   --es auto_action com.example.headlesscamera.START_RECORDING
 
-# Wait for recording duration
-sleep 30
+# ...wait as needed...
 
-# Stop recording
+# Stop
 am start \
   -n com.example.headlesscamera/.MainActivity \
   --es auto_command stop \
   --es auto_action com.example.headlesscamera.STOP_RECORDING
 ```
 
+---
+
 ## 📁 Retrieving Recordings
 
-### Check for Recorded Files
+### Locate Files
+
 ```bash
-adb shell find /storage/emulated/0/Android/data/com.example.headlesscamera/ -name "*.mp4" -o -name "latest_output.txt" 2>/dev/null
+adb shell find /storage/emulated/0/Android/data/com.example.headlesscamera/ -name "*.mp4" -o -name "latest_output.txt"
 ```
 
-### Download Recordings to Computer
+### Pull to PC
+
 ```bash
-# Create local directory
 mkdir recordings
-
-# Pull all recordings
 adb pull /storage/emulated/0/Android/data/com.example.headlesscamera/files/Movies/ ./recordings/
-
-# Pull latest output info
 adb pull /storage/emulated/0/Android/data/com.example.headlesscamera/files/latest_output.txt
 ```
 
+> ⚠️ On Android 11+ (API 30+), the app’s private directory is hidden from user-facing file managers—use ADB.
+
+---
+
+## 🗂 Permissions Reference
+
+| Permission                                                               | Purpose                                           |
+| ------------------------------------------------------------------------ | ------------------------------------------------- |
+| `android.permission.CAMERA`                                              | Access camera hardware                            |
+| `android.permission.RECORD_AUDIO`                                        | Access microphone                                 |
+| `android.permission.WRITE_EXTERNAL_STORAGE` (≤API 34)                    | Save recordings to external storage               |
+| `android.permission.READ_EXTERNAL_STORAGE` (≤API 34)                     | Read from external storage                        |
+| `android.permission.FOREGROUND_SERVICE`                                  | Run service in foreground                         |
+| `android.permission.FOREGROUND_SERVICE_CAMERA` (API 34+)                 | Camera usage in foreground service on Android 14+ |
+| `android.permission.RECEIVE_BOOT_COMPLETED`                              | Auto-start after device boot                      |
+| `android.permission.WAKE_LOCK`                                           | Prevent sleep during recording                    |
+| `android.permission.SYSTEM_ALERT_WINDOW`                                 | Overlay for notifications/UI if needed            |
+| `android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS`                | Bypass Doze battery optimizations                 |
+| `android.permission.START_FOREGROUND_SERVICES_FROM_BACKGROUND` (API 34+) | Start service from background on Android 14+      |
+
+---
+
 ## 🔧 Configuration
 
-The app uses default recording settings:
-- **Resolution**: 1920x1080 (1080p)
-- **Frame Rate**: 30 FPS
-- **Video Codec**: H.264
-- **Audio Codec**: AAC
-- **Bitrate**: 5 Mbps
+By default, `CameraService.setupMediaRecorder()` uses:
 
-To modify these settings, edit the `setupMediaRecorder()` method in `CameraService.java`.
+* **Resolution:** 1920×1080 (1080p)
+* **Frame Rate:** 30 FPS
+* **Video Codec:** H.264
+* **Audio Codec:** AAC
+* **Bitrate:** 5 Mbps
 
-## 🛠️ Maintenance Commands
+To adjust, open `CameraService.java` and modify the `setupMediaRecorder()` parameters.
+
+---
+
+## 🛠️ Maintenance & Debug
 
 ### Uninstall App
+
 ```bash
 adb shell pm uninstall com.example.headlesscamera
 ```
 
 ### Check Service Status
+
 ```bash
 adb shell dumpsys activity services | grep HeadlessCamera
 ```
 
 ### View Logs
+
 ```bash
 adb logcat -s CameraService
 ```
 
 ### Clear App Data
+
 ```bash
 adb shell pm clear com.example.headlesscamera
 ```
 
-## 🎯 Use Cases
+---
 
-- **Security Monitoring**: Discrete recording for surveillance
-- **Automated Recording**: Triggered recording based on external events
-- **Remote Recording**: Control via ADB from another device
-- **Background Documentation**: Recording while using other apps
-- **Testing**: Automated camera testing scenarios
-
-## ⚠️ Important Notes
-
-1. **Battery Optimization**: Disable battery optimization for the app to ensure continuous operation
-2. **Storage Space**: Monitor available storage as recordings can be large
-3. **Permissions**: All permissions must be granted for proper functionality
-4. **Android Version**: Tested on Android 10+ (API 30+)
-5. **Background Limits**: Some OEMs may have additional background restrictions
-
-## 🔍 Troubleshooting
+## ⚠️ Troubleshooting
 
 ### App Won't Record
-1. Check all permissions are granted
-2. Verify camera isn't being used by another app
-3. Check available storage space
-4. Review logcat for error messages
+
+1. Verify **all** permissions are granted
+2. Ensure **no other** app is using the camera
+3. Check **available storage**
+4. Inspect `adb logcat -s CameraService` for errors
 
 ### Service Stops Unexpectedly
-1. Disable battery optimization for the app
-2. Check if app is whitelisted from background restrictions
-3. Verify wake lock is working (check logs)
+
+1. Disable battery optimizations for the app
+2. Whitelist in “Background restrictions” (if OEM-specific)
+3. Confirm **wake lock** acquisition in logs
 
 ### Files Not Found
-1. Check app has storage permissions
-2. Verify external storage is mounted
-3. Look for files in the correct directory path
 
-## 📄 License
-
-This project is provided as-is for educational and development purposes. Please ensure you comply with all local laws and regulations regarding recording and privacy.
-
-## 🤝 Contributing
-
-Feel free to submit issues, fork the repository, and create pull requests for any improvements.
+1. Confirm storage permissions
+2. Ensure external storage is mounted
+3. Use ADB to browse `/storage/emulated/0/Android/data/...`
 
 ---
 
-**Note**: This application is designed for legitimate use cases. Always respect privacy laws and obtain proper consent when recording audio or video.
+## 🎯 Use Cases
+
+* **Security Monitoring** – Discreet surveillance
+* **Automated Recording** – Triggered by external events
+* **Remote Control** – Via ADB or networked shell
+* **Background Documentation** – Capture video while using other apps
+* **Camera Testing** – Automated validation in CI environments
+
+---
+
+## 📄 License
+
+This project is provided as-is for educational and development purposes. Always comply with local privacy and recording laws.
+
+---
+
+## 🤝 Contributing
+
+Pull requests, issues, and forks are welcome! For major changes, please open an issue first to discuss your proposal.
+
+---
+
+> **Disclaimer:** Designed for legitimate use cases only. Always obtain proper consent before recording audio or video.
+
+```
+```
