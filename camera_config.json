@@ -1,0 +1,9 @@
+{
+  "resolution": "1080p",
+  "frame_rate": 30,
+  "encoding": "H.264", 
+  "audio_enabled": true,
+  "duration_seconds": 0,
+  "loop_enabled": false,
+  "interval_minutes": 5
+}

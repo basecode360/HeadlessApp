@@ -18,6 +18,8 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.IBinder;
 import android.os.PowerManager;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -32,9 +34,6 @@ import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Locale;
-
-import android.os.Handler;
-import java.io.FileWriter;
 
 public class CameraService extends Service {
 
@@ -55,6 +54,7 @@ public class CameraService extends Service {
 
     private PowerManager.WakeLock wakeLock;
 
+    // Configuration-based recording
     private ConfigParser.VideoConfig videoConfig;
     private Handler recordingHandler;
     private Runnable stopRecordingRunnable;
@@ -67,7 +67,7 @@ public class CameraService extends Service {
 
         // Load configuration
         videoConfig = ConfigParser.loadConfig(this);
-        recordingHandler = new Handler();
+        recordingHandler = new Handler(Looper.getMainLooper());
 
         Log.d(TAG, "📋 ACTION_START_RECORDING = '" + ACTION_START_RECORDING + "'");
         Log.d(TAG, "📋 ACTION_STOP_RECORDING = '" + ACTION_STOP_RECORDING + "'");
@@ -107,11 +107,11 @@ public class CameraService extends Service {
 
         if (ACTION_START_RECORDING.equals(action) || "start".equals(command)) {
             startCameraAndRecord();
-        } else if (ACTION_OPEN_CAMERA.equals(action)) {
+        } else if (ACTION_OPEN_CAMERA.equals(action) || "open".equals(command)) {
             openCameraOnly();
         } else if (ACTION_STOP_RECORDING.equals(action) || "stop".equals(command)) {
             stopRecording();
-        } else if (ACTION_ENABLE_LOOPING.equals(action)) {
+        } else if (ACTION_ENABLE_LOOPING.equals(action) || "loop".equals(command)) {
             enableLooping();
         }
 
@@ -532,12 +532,16 @@ public class CameraService extends Service {
             }
             updateNotification(statusMsg);
 
+            // If looping is enabled, schedule next recording
+            if (isLooping && videoConfig.loopEnabled) {
+                scheduleLoopRecording();
+            }
+
         } catch (Exception e) {
             Log.e(TAG, "❌ Error stopping recording: " + e.getMessage());
             updateNotification("❌ Error stopping recording");
         }
     }
-
 
     @Override
     public void onDestroy() {
