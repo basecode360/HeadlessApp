@@ -246,9 +246,3 @@ Feel free to submit **issues**, **fork** the repository, and create **pull reque
 
 > **Disclaimer**: This app is designed for legitimate use cases only. Always respect privacy laws and obtain necessary permissions before recording audio or video.
 
-```
-
----
-
-This version of the README now includes **detailed configuration instructions**, **on-device mobile user commands**, and **specific guidance for first-time installations**. The changes reflect a more **professional** and **user-friendly** approach for clients or developers to easily understand the setup, troubleshooting, and usage of the app.
-```
